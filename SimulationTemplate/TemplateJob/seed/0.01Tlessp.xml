@@ -1,0 +1,86 @@
+<?xml version="1.0" ?>
+<Virtual-IPM version="2.2">
+    <Beams>
+        <Beam>
+            <Parameters>
+                <BunchPopulation info="The population of each bunch in a bunched beam. For DCBeam cases, this parameter must be set to 1. The corresponding DC models offer a BeamCurrent parameter instead.">1.25</BunchPopulation>
+                <Energy unit="GeV" info="Together with the particle type's rest energy this determines the relativistic gamma factor. Depending on the rest energy, the energy can be specified either as total energy or energy per nucleon.">25.445</Energy>
+                <ParticleType>
+                    <ChargeNumber>1</ChargeNumber>
+                    <RestEnergy unit="MeV">%(proton mass energy equivalent in MeV)</RestEnergy>
+                </ParticleType>
+            </Parameters>
+            <BunchShape>
+                <Parameters>
+                    <LongitudinalSigmaLabFrame unit="ns">1.0</LongitudinalSigmaLabFrame>
+                    <TransverseSigma unit="um">[ 850.0, 800.0 ]</TransverseSigma>
+                </Parameters>
+                <Model>Gaussian</Model>
+            </BunchShape>
+            <BunchElectricField>
+                <Model>Gaussian</Model>
+            </BunchElectricField>
+            <BunchTrain>
+                <Type>SingleBunch</Type>
+            </BunchTrain>
+        </Beam>
+    </Beams>
+    <Device>
+        <Parameters>
+            <XBoundaries unit="mm">[ -45, 45 ]</XBoundaries>
+            <YBoundaries unit="mm">[ -45, 35 ]</YBoundaries>
+        </Parameters>
+        <Model>InterpolatingIPM</Model>
+    </Device>
+    <ParticleGeneration>
+        <Parameters>
+            <ZRange unit="mm" info="The range along the z-axis in which particles are generated.">[ -7,7 ]</ZRange>
+            <Ionization>
+                <Parameters>
+                    <EnergyBins info="This parameter determines how fine or coarse the given energy range is sampled. For N energy bins there are exactly N different possible values for electron energies.">200</EnergyBins>
+                    <EnergyBoundaries unit="eV" info="The energies of generated electrons are sampled within this interval.">[ 0.01, 100.0 ]</EnergyBoundaries>
+                    <GasType>Helium</GasType>
+                    <ScatteringAngleBins info="This parameter determines how fine or coarse the given scattering angle range is sampled. For N scattering angle bins there are exactly N different possible values for scattering angles that generated electrons can have.">200</ScatteringAngleBins>
+                    <ScatteringAngleBoundaries unit="rad" info="The polar scattering angles (the angle between an electron velocity and the z-axis) is sampled within this interval.">[ 0.0, %(pi) ]</ScatteringAngleBoundaries>
+                </Parameters>
+            </Ionization>
+        </Parameters>
+        <Model>ZspreadVoitkivDDCS</Model>
+    </ParticleGeneration>
+    <ParticleTracking>
+        <Parameters/>
+        <Parameters/>
+        <Model>Boris</Model>
+    </ParticleTracking>
+    <GuidingFields>
+        <Electric>
+            <Parameters>
+                <ElectricField unit="kV/m">[ 0, 286,0 ]</ElectricField>
+            </Parameters>
+            <Model>UniformElectricField</Model>
+        </Electric>
+        <Magnetic>
+            <Parameters>
+                <MagneticField unit="T">[ 0, 0.01, 0 ]</MagneticField>
+            </Parameters>
+            <Model>UniformMagneticField</Model>
+        </Magnetic>
+    </GuidingFields>
+    <Simulation>
+        <NumberOfParticles info="The number of particles to be simulated. The actual number can deviate slightly if particle generation involves random number generation.">5000</NumberOfParticles>
+        <ParticleType>
+            <ChargeNumber>-1</ChargeNumber>
+            <RestEnergy unit="MeV">%(electron mass energy equivalent in MeV)</RestEnergy>
+        </ParticleType>
+        <TimeRange>
+            <SimulationTime unit="ns">25</SimulationTime>
+            <TimeDelta unit="ns">0.0005</TimeDelta>
+        </TimeRange>
+        <Output>
+            <Parameters>
+                <Filename>C:/Users/lgolino/cernbox/Documents/BIGroupAllWork/VIPMSims/help/0.01T.csv</Filename>
+            </Parameters>
+            <Recorder>BasicRecorder</Recorder>
+        </Output>
+    </Simulation>
+</Virtual-IPM>

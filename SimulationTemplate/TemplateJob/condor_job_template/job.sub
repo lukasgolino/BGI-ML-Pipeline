@@ -1,0 +1,22 @@
+# Info multiple arguments: http://chtc.cs.wisc.edu/multiple-jobs.shtml#args
+# Info job flavours: https://batchdocs.web.cern.ch/local/submit.html#job-flavours
+executable              = run_simulation_job.sh
+arguments               = $(ClusterId) $(ProcId) $(config_file)
+output                  = output/$(ClusterId).$(ProcId).out
+error                   = error/$(ClusterId).$(ProcId).err
+log                     = log/$(ClusterId).log
+request_cpus            = 1
+request_memory          = 2048MB
+when_to_transfer_output = ON_EXIT_OR_EVICT
+should_transfer_files   = YES
+
+# here we need to transfer all files required for the job to complete: configuration
+# transfer_input_files    = /eos/user/l/lgolino/Documents/BIGroupAllWork/VIPMSims/INSERTHERE/files/configurations/$(config_file)
+# RUN THIS: scp -r /eos/user/l/lgolino/Documents/BIGroupAllWork/VIPMSims/INSERTHERE/files/configurations/ ./configurations
+transfer_input_files    = /afs/cern.ch/work/l/lgolino/private/BI/simulations/condor_jobs/condor_job_INSERTHERE/configurations/$(config_file)
+
+# Tell the scheduler that you would like this job to run in around 3days
++JobFlavour             = "testmatch"
+
+# Tell the job to take the config file name from this file (one line per job run)
+queue config_file from names_to_txt.txt
